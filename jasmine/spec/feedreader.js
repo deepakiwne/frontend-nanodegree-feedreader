@@ -92,7 +92,7 @@ $(function() {
 		});
 		it('should have at least a single .entry element within the .feed container', function(done) {
 			let feedContainer = document.querySelector('.feed');
-			let entryLinks = feedContainer.querySelector('.entry-link');
+			let entryLinks = feedContainer.querySelectorAll('.entry-link');
 			expect(entryLinks.length).not.toBe(0);
 			done();
 		});
@@ -108,18 +108,18 @@ $(function() {
 		let feedContainer = document.querySelector('.feed');
 		let entryLinksBefore = undefined;
 		let entryLinksAfter = undefined;
+		// To simulate feed selection, we are loading feed index 0 and then loading feed index 1
 		beforeEach(function(done) {
-			loadFeed(1, function() {
-				loadFeed(0, function() {
-					entryLinksBefore = feedContainer.querySelector('.entry-link');
+			loadFeed(0, function() {
+				entryLinksBefore = feedContainer.querySelectorAll('.entry-link');
+				loadFeed(1, function() {
+					entryLinksAfter = feedContainer.querySelectorAll('.entry-link');
 					done();
 				});
-				entryLinksAfter = feedContainer.querySelector('.entry-link');
-				done();
 			});
 		});
 		it('should change the content', function(done) {
-			expect(entryLinksAfter).not.toBe(entryLinksBefore);
+			expect(entryLinksAfter).not.toEqual(entryLinksBefore);
 			done();
 		});
 	});
