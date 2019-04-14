@@ -69,10 +69,26 @@ $(function() {
 		 */
 		it('should change visibility when clicked', function() {
 			let body = document.querySelector('body');
+
+			// Menu should display when clicked
 			$('.menu-icon-link').click();
-			expect(body.classList.length).toBe(0);
+			menuHiddenBefore = []
+			body.classList.forEach(function(c){
+				if(c === 'menu-hidden'){
+					menuHiddenBefore.push(c);
+				}
+			});
+			expect(menuHiddenBefore.length).toBe(0);
+			
+			// Menu should be hidden when clicked again
 			$('.menu-icon-link').click();
-			expect(body.classList[0]).toBe('menu-hidden');
+			menuHiddenAfter = []
+			body.classList.forEach(function(c){
+				if(c === 'menu-hidden'){
+					menuHiddenAfter.push(c);
+				}
+			});
+			expect(menuHiddenAfter.length).toBeGreaterThan(0);
 		});
 	});
 
